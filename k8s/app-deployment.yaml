@@ -12,6 +12,7 @@ spec:
       labels: { app: devops-app }
     spec:
       containers:
+      
         - name: devops-app
           image: ghcr.io/saurabhsj29/devops-challenge-app:latest
           ports: [{ containerPort: 3000 }]
