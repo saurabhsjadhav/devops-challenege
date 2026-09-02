@@ -1,3 +1,5 @@
+#This docker file to build a docker image
+
 FROM node:20-alpine
 WORKDIR /app
 COPY package.json .
