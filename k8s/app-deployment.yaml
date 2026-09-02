@@ -14,7 +14,7 @@ spec:
       containers:
       
         - name: devops-app
-          image: ghcr.io/saurabhsj29/devops-challenge-app:latest
+          image: ghcr.io/saurabhsjadhav/devops-challenge-app:latest
           ports: [{ containerPort: 3000 }]
           envFrom:
             - configMapRef: { name: app-config }
