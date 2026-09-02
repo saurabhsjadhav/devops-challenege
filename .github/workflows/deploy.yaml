@@ -7,6 +7,7 @@ on:
 env:
   IMAGE: ghcr.io/${{ github.repository_owner }}/devops-challenge-app
 
+  
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -45,6 +46,18 @@ jobs:
           sed 's|latest|${{ github.sha }}|' k8s/app-deployment.yaml | kubectl apply -f -
           kubectl apply -f k8s/app-service.yaml
           kubectl -n challenge rollout status deployment/devops-app --timeout=90s
+
+      - name: Debug on failure
+        if: failure()
+        run: |
+          echo "----- PODS -----"
+          kubectl -n challenge get pods -o wide
+          echo "----- DESCRIBE PODS -----"
+          kubectl -n challenge describe pods
+          echo "----- APP LOGS -----"
+          kubectl -n challenge logs -l app=devops-app --all-containers --tail=100 || true
+          echo "----- REDIS LOGS -----"
+          kubectl -n challenge logs -l app=redis --all-containers --tail=100 || true
 
       - name: Smoke test
         run: |
